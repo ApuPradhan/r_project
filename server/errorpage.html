@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Combined Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            $("#content1").load("/header");
+            $("#content2").load("/footer");
+        });
+    </script>
+    <style>
+.errormsg {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  border: 2px solid #ff0000;
+  border-radius: 5px;
+  background-color: #ffe6e6;
+  color: #ff0000;
+  font-size: 35px; /* Adjust the font size as needed */
+}
+    </style>
+
+</head>
+<body>
+   
+    <div id="content1"></div>
+    <div class="main p-4">
+        <div class="errormsg">Please Enter Correct Ration Id</div>
+
+    
+       
+            <div class="forwardbutton">
+                <button class="right-aligned-btn" onclick="back()">Back</button>
+    
+        </div>
+     
+
+    </div>
+    
+    <div id="content2"></div>
+
+
+  <script>
+    function back(){
+        window.location.href = '/Ration_Card_Auth';
+    }
+  </script>
+
+</body>
+</html>

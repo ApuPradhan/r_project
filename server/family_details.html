@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Family Details</title>
+    <script>
+        var ln = localStorage.getItem('ln');
+        console.log(ln);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $("#content1").load("/header");
+            $("#content2").load("/footer");
+        });
+
+
+
+    </script>
+    <style>
+        .data-table {
+            width: 80%;
+            /* Increase the width as needed */
+            align-items: center;
+            justify-content: center;
+
+            overflow: auto;
+            margin: 0 auto;
+            cursor: pointer;
+            /* Apply cursor pointer to the entire table */
+            /* Center the table horizontally */
+
+        }
+
+        .data-table th {
+            background-color: #06038D;
+            /* Dark background for header */
+            color: #ffffff;
+            cursor: pointer;
+            /* Apply cursor pointer to the entire table */
+            /* White text color for header */
+        }
+
+
+
+
+
+        .table-scroll {
+            overflow-y: auto;
+            height: fit-content;
+            width: 80%;
+            cursor: pointer;
+            /* Apply cursor pointer to the entire table */
+        }
+
+        .ttable-scroll thead th {
+            position: sticky;
+            /* make the table heads sticky */
+            top: 0px;
+            /* table head will be placed from the top of the table and sticks to it */
+            cursor: pointer;
+            /* Apply cursor pointer to the entire table */
+        }
+
+
+        th {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        tr {
+            text-align: center;
+
+        }
+
+
+
+        /* Styling for rectangular buttons with margins on all sides */
+        td {
+            width: 120px;
+            /* Adjust width */
+            height: 40px;
+            /* Adjust height */
+            padding: 10px;
+            text-align: center;
+            margin: 10px;
+            /* Adjust margins */
+            cursor: pointer;
+            /* Apply cursor pointer to the entire table */
+
+        }
+
+        /* Styling for rectangular buttons */
+        td {
+
+            /* Light blue color */
+            color: black;
+            /* Text color */
+            border: none;
+
+            cursor: pointer;
+            font-weight: bold;
+            /* Bold text */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Slight shadow */
+            transition: transform 0.2s, box-shadow 0.2s;
+            /* Transition effects */
+        }
+
+        /* Hover effect */
+        td:hover {
+            background-color: #758595;
+            /* Darker blue on hover */
+            transform: translateY(-2px);
+            /* Move slightly up on hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            /* Increase shadow on hover */
+        }
+
+        .right-aligned-btn {
+            height: 80px;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-left: 100px;
+            margin-bottom: 10px;
+
+
+        }
+
+        .left-aligned-btn {
+            margin-top: 10px;
+            margin-left: 350px;
+            height: 80px;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .logo {
+            width: 50px;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 40px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="row logo">
+        <div class="col-3 ">
+            <!-- Image (Logo) -->
+            <img src="/assets/images/Annadata_logo.png" alt="Logo Description" style="position: absolute; left: 40;">
+        </div>
+    </div>
+
+    <div id="content1"></div>
+    <div class="main p-4">
+        <div class="row">
+            <div class="col-12 centered-content font-size:50px;">
+
+                <h2 id="family_det">Family Details</h2>
+            </div>
+        </div>
+        <div class="table t-tb" style="height:300px">
+            <table id="data-table" class="data-table">
+                <thead>
+                    <tr>
+                        <th>Ration Id</th>
+                        <th>Name</th>
+                        <th>Aadhar Card No</th>
+                        <th>Card Type</th>
+                        <!-- Add more table headers based on your data -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table body will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row ">
+            <div class="col-6 ">
+                <div class="backbutton">
+                    <button class="right-aligned-btn"
+                        style="background-color: yellow; color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);"
+                        onclick="back()">Back</button>
+                </div>
+            </div>
+
+            <div class="col-6">
+
+                <button class="left-aligned-btn"
+                    style="background-color: light rgb(155, 155, 244); color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);"
+                    onclick="proceed()">OK</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    </div>
+
+    <div id="content2"></div>
+    <script>
+        // Retrieve intValue from localStorage
+        var intValue = localStorage.getItem('intValue');
+        var logId = localStorage.getItem('logId');
+
+        // Make an AJAX request to fetch data from another route
+        $.ajax({
+            type: 'GET',
+            url: '/getRationdet/' + intValue,
+            success: function (response) {
+                var tableBody = $('#data-table tbody');
+
+                response.forEach(function (item) {
+                    var row = '<tr><td>' + item.ration_card_id + '</td><td>' + item.name + '</td><td>' + item.aadhaar + '</td><td>' + item.card_type + '</td></tr>';
+                    tableBody.append(row);
+                });
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        console.log("logId:", logId);
+
+        function proceed() {
+            $.ajax({
+                type: 'GET',
+                url: '/checktransaction/' + intValue,
+                success: function (response) {
+                    if (response && response.length > 0) {
+                        localStorage.setItem('intValue', intValue);
+                        localStorage.setItem('logId', logId)
+                        localStorage.setItem('flag', '1');
+                        window.location.href = '/grains_details';
+
+
+                    } else
+                        $.ajax({
+                            type: 'GET',
+                            url: '/getRationdet/checkgrainsdetail/' + intValue,
+                            success: function (response) {
+                                if (response && response.length > 0) {
+                                    //localStorage.setItem('intValue', intValue);
+                                    // window.location.href = '/grains_details';
+                                } else {
+                                    localStorage.setItem('intValue', intValue);
+                                    localStorage.setItem('logId', logId)
+                                    localStorage.setItem('flag', '0');
+                                    localStorage.setItem('ln', ln);
+                                    window.location.href = '/grains_details';
+
+                                }
+
+                            },
+                            error: function (error) {
+                                console.error('Error:', error);
+                            }
+                        });
+                }
+            })
+
+
+
+        }
+
+
+        function back() {
+            window.location.href = '/Ration_Card_Auth'
+        }
+    </script>

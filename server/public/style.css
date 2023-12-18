@@ -1,0 +1,242 @@
+/*body*/
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding:0;
+    }
+
+/*Header styling*/
+.header {
+    background: linear-gradient(rgba(255,153,51,1), rgba(255,153,51,0));
+    height: 19vh;
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: right;
+    align-items: right;
+    justify-content: right;
+    align-items: right;
+    width:100%;
+
+  }
+/*header styling*/
+
+
+/*footer styling*/
+.footer {
+    background: linear-gradient(rgba(4, 106, 56, 0), rgba(4, 106, 56, 1));
+    height: 20vh;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .footer-img {
+ 
+        display: block; /* Ensure the images don't have any extra space below */
+        margin: 0 auto; /* Center the images */
+   
+       
+     
+  }
+  @media screen and (max-width: 768px) {
+    .footer img {
+      max-width: 90%; /* Make images responsive within smaller screens */
+    
+
+    }
+  
+}
+
+
+  /*h1*/
+  .custom-heading {
+    font-size: 3rem; /* Base font size */
+    line-height: 1.5; /* Line height */
+    text-align: center; /* Center-align text */
+    color: #333; /* Text color */
+  }
+  
+  /* Media queries for different screen sizes */
+  @media screen and (min-width: 576px) {
+    /* Adjust font size for medium screens */
+    .custom-heading {
+      font-size: 3rem;
+      overflow: hidden;
+    }
+  }
+  
+  @media screen and (min-width: 768px) {
+    /* Adjust font size for large screens */
+    .custom-heading {
+      font-size: 4rem;
+    }
+  }
+  
+  @media screen and (min-width: 992px) {
+    /* Adjust font size for extra-large screens */
+    .custom-heading {
+      font-size: 4rem;
+    }
+  }
+  /*h1*/
+
+
+  /*text at the footer*/
+  .footer-text {
+    text-align: center;
+/* Adding padding for spacing if needed */
+  }
+
+  .footer-text p {
+    font-size: 12px; /* Decrease font size for smaller screens if necessary */
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
+    font-style:italic;
+    color: white;
+}
+  
+  /* Making the text responsive */
+  @media screen and (max-width: 600px) {
+    /* Adjust text size or alignment for smaller screens */
+    .footer-text p {
+      font-size: 14px; /* Decrease font size for smaller screens if necessary */
+    }
+  }
+
+  /*footer styling*/
+
+
+
+
+  .main {
+    display: flex;
+    height: 60vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* Ensures elements stack vertically */
+    width:100%;
+  
+  
+}
+
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto; /* Full viewport height */
+  flex-wrap: wrap;
+  font-size: 50px;
+
+
+}
+
+.row {
+  display: flex;
+  
+  width: 100%; /* Ensure full width */
+  /* Adjust spacing between rows */
+  font-size:large
+
+
+
+}
+
+
+.column {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc; /* Optional: To visualize columns */
+}
+
+
+
+
+/*forward button styling*/
+.forwardbutton {
+  width: 100%;
+  text-align: right;
+  padding: 20px;
+  padding-bottom: 20px;
+  font-family: "Arial", sans-serif;
+  display: flex;
+  justify-content: flex-end; /* Aligns button to the right */
+  align-items: center; /* Centers button vertically */
+
+
+
+}
+
+.right-aligned-btn {
+  flex-shrink: 0; /* Prevents button from shrinking */
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  
+
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .forwardbutton {
+      text-align: center;
+      justify-content: center; /* Center button on smaller screens */
+      margin-top: 10px;
+  }
+}
+/*forward button styling*/
+
+.backbutton {
+  margin-bottom:50px;
+  margin-right: 980px;
+  height: 80px;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  }
+
+ .left-aligned-btn {
+  
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px; 
+  }
+  
+  @media screen and (max-width: 600px) {
+  .button {
+  text-align: center; 
+  }
+  } 
+  
+  
+  .small-button {
+    background-color: #007bff;
+    color: #fff;
+    height: 60px; /* Increased height */
+    width: 60px; /* Increased width */
+    font-size: 16px; /* Adjusted font size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1px; /* Reduced margin for less space between buttons */
+}

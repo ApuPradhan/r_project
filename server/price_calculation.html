@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Combined Page</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    var ln= localStorage.getItem('ln');
+
+</script>
+<script src="language.js"></script>
+  <script>
+      $(function() {
+          $("#content1").load("/header");
+          $("#content2").load("/footer");
+      });
+
+  
+      var ration_card_id=JSON.parse(localStorage.getItem('ration_card_id'));
+      var logId=JSON.parse(localStorage.getItem('logId'));
+      var com_id=JSON.parse(localStorage.getItem('commodity_id'));
+      var quantities = JSON.parse(localStorage.getItem('quantities'));
+      var grainsdet = JSON.parse(localStorage.getItem('grainsdet'));
+
+      console.log(quantities);
+      console.log("logId:",logId);
+
+
+      var price=[];
+
+$.ajax({
+type: 'GET', 
+url: '/price', 
+success: function(response) {
+
+const valuesArray = response.map(item => item.price);
+price=valuesArray;
+
+console.log(price);
+
+// Use 'dataArray' for further processing or store it as needed
+},
+error: function(error) {
+console.error('Error:', error);
+}
+});
+    
+
+
+  </script>
+  <style>
+    .h {
+      font-family: "Arial", sans-serif;
+      font-style: italic;
+      font-size: 20px;
+      margin-top:0px;
+  }
+
+        .data-table {
+          width: 100%;
+          /* Increase the width as needed */
+          align-items: center;
+          justify-content: center;
+        
+          overflow: auto;
+          margin: 0 auto;
+          cursor: pointer;/* Apply cursor pointer to the entire table */
+          /* Center the table horizontally */
+  
+      }
+  
+      .data-table th {
+          background-color:  #06038D;
+          /* Dark background for header */
+          color: #ffffff;
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+          /* White text color for header */
+        
+      }
+  
+  
+  
+  
+  
+      .table-scroll {
+          overflow-y: auto;
+          height: fit-content;
+          width: 85%;
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+
+      }
+  
+      .ttable-scroll thead th {
+          position: sticky;
+          /* make the table heads sticky */
+          top: 0px;
+          /* table head will be placed from the top of the table and sticks to it */
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+      }
+  
+  
+      th {
+          font-size: 20px;
+          font-weight: bold;
+          text-align: center;
+          cursor: pointer; 
+      }
+  
+      tr {
+          text-align: center;
+         
+      }
+  
+  
+  
+      /* Styling for rectangular buttons with margins on all sides */
+      td {
+          width: 120px;
+          /* Adjust width */
+          height: 40px;
+          /* Adjust height */
+          padding: 10px;
+          text-align: center;
+          margin: 10px;
+          /* Adjust margins */
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+          
+      }
+      /* Styling for rectangular buttons */
+      td {
+          
+        /* Light blue color */
+        color: black;
+        /* Text color */
+        border: none;
+  
+        cursor: pointer;
+        font-weight: bold;
+        /* Bold text */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Slight shadow */
+        transition: transform 0.2s, box-shadow 0.2s;
+        /* Transition effects */
+    }
+  
+  /* Hover effect */
+  td:hover {
+    background-color: #758595;
+    /* Darker blue on hover */
+    transform: translateY(-2px);
+    /* Move slightly up on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Increase shadow on hover */
+  }
+        .right-aligned-btn {
+          height: 80px;
+      
+          background: linear-gradient(to right, yellow, white);
+          color: #ffffff;
+          padding: 10px 50px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer; 
+          transition: background 0.3s ease;
+         
+      }
+      .left-aligned-btn {
+          height: 80px;
+      
+          background: linear-gradient(to right, #3498db, white);
+          color: #ffffff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer !important;
+          transition: background 0.3s ease;
+      }
+      .logo {
+        width: 50px;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 40px;
+      
+      }
+ 
+      </style>
+   
+
+</head>
+<body>
+    <div class="row logo">
+    <div class="col-3 ">
+        <!-- Image (Logo) --> 
+        <img src="/assets/images/Annadata_logo.png" alt="Logo Description" style="position: absolute; left: 40;">
+    </div>
+</div>
+
+    
+ 
+    <div id="content1"></div>
+    <div class="main">  
+      <div class="row mt-8">
+        <div class="col-12 centered-content ">
+            <div class="h" id="tot_price">Total Price</div>
+        </div>
+    </div>
+    <div class="table-scroll">
+      <table id="data-table" class="data-table">
+          <thead>
+              <tr>
+                <th id="grains">Grains</th>
+                <th id="qty_taken">Quantity Taken</th>
+                <th id="price_kg">Price (per Kg)</th>
+                <th id="tot">Total</th>
+                  <!-- Add more table headers based on your data -->
+              </tr>
+          </thead>
+          <tbody id="tableBody">
+            <script>
+          
+              const tbody = document.getElementById('tableBody');
+              var totq=0;
+              let totp=0;
+              let totprice=0;
+              let sumprice=0;
+              var totpriceitem=[];
+           
+              // Loop through the arrays and create rows with three columns
+              for (let i = 0; i < quantities.length; i++) {
+                const tr = document.createElement('tr');
+            
+                // Column 1: Data from array1
+                const td1 = document.createElement('td');
+                td1.textContent = grainsdet[i];
+                tr.appendChild(td1);
+            
+                // Column 3: Data from array3
+                const td2 = document.createElement('td');
+                td2.textContent = quantities[i];
+                totq=totq+quantities[i];
+                tr.appendChild(td2);
+                
+                $.ajax({
+  type: 'GET', 
+  url: '/price', 
+  success: function(response) {
+  
+      //const valuesArray = response.map(item => item.price);
+      //price=valuesArray;
+      const price=response[i].price;
+      totp=totp+parseInt(price);
+  
+    
+  
+              const td3 = document.createElement('td');
+                td3.textContent = price;
+               
+                tr.appendChild(td3);
+  
+                const td4 = document.createElement('td');
+                totprice= price*quantities[i];
+                totpriceitem[i]=totprice;
+                sumprice=sumprice+totprice;
+                td4.textContent=totprice;
+               
+                tr.appendChild(td4);
+                
+  
+  },
+  error: function(error) {
+  console.error('Error:', error);
+  },
+  complete: function() {
+    
+      updateTable(totp,sumprice);
+    }
+  });
+  
+  
+  
+  
+  
+  
+  
+              
+  
+            
+                tbody.appendChild(tr);
+                
+  
+  
+  
+            
+              }
+              console.log(totpriceitem);
+            
+              document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('totq').textContent = totq;
+      document.getElementById('totp').textContent = totp;
+      document.getElementById('totpr').textContent = totprice;
+  });
+  
+  
+  function updateTable(price, totprice) {
+    document.getElementById('totp').textContent = totp;
+      document.getElementById('totpr').textContent = totprice;
+  }
+           
+  
+            </script>
+
+<tr><td id="tot">Total</td><td id="totq"></td><td id="totp" ></td><td id="totpr"></td></tr>
+          </tbody>
+      </table>
+  </div>
+  <div class="row ">
+      <div class="col-6 ">
+          <div class="backbutton">
+            <button class="right-aligned-btn" style="background-color: yellow; color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5); margin-left: 90px ; margin-top: px;"onclick="back()">Back</button>
+          </div>
+      </div>
+
+      <div class="col-6">
+          <div class="forwardbutton">
+            <button class="left-aligned-btn" style="background-color: light rgb(155, 155, 244); color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5); margin-right: 100px; margin-bottom: 60px;"onclick="proceed()">OK</button>
+          </div>
+      </div>
+  </div>
+    </div>
+    <div id="content2"></div>
+    
+  
+  </body>
+  </html>
+  
+  <script>
+    function proceed(){
+      localStorage.setItem('ration_card_id',JSON.stringify(ration_card_id));
+    localStorage.setItem('logId',JSON.stringify(logId));
+    localStorage.setItem('commodity_id',JSON.stringify(com_id));
+    localStorage.setItem('quantities',JSON.stringify(quantities)); 
+    localStorage.setItem('grainsdet',JSON.stringify(grainsdet));
+      localStorage.setItem('total_price',JSON.stringify(totpriceitem));
+    window.location.href = '/paymentpage';
+    } 
+    function back(){
+      window.location.href='/addquantity';
+    }
+
+  </script>

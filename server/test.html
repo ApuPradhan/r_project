@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>family_details</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            $("#content1").load("/header");
+            $("#content2").load("/footer");
+        });
+  
+        // Retrieve intValue from localStorage
+        var intValue = localStorage.getItem('intValue');
+        
+    </script>
+    
+     <style>
+        /* Custom styles, if needed */
+        .container {
+            height: 50vh; 
+            /* Set the width to 100% of the viewport */
+      /* Ensure the container doesn't exceed the viewport width */
+     
+      
+    }
+
+        .centered-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:auto; /* Full viewport height */
+        }
+
+        .proceed-button {
+            text-align: right;
+            margin-bottom: 20px; /* Adjust margin as needed */
+        }
+
+    
+            body {
+              background-color: #f8f9fa; /* Set a light background color */
+            }
+
+       
+
+      
+             
+
+
+            .data-table {
+              width: 100%;
+              height: 10px;
+              border-collapse: collapse;
+              border-spacing: 0px;
+              overflow: auto;
+          
+
+              
+    
+
+            }
+        
+         
+        
+            .data-table th {
+              background-color: #7590ab; /* Dark background for header */
+              color: #ffffff; /* White text color for header */
+            }
+        
+            .family-table td {
+        
+              color: black; /* White text color for data cells */
+            }
+
+            .data-table th, .data-table td {
+                border: 1px solid #007bff; /* Blue border */
+                padding: 10px;
+                text-align: center;
+ 
+            }
+
+
+            
+            .table-scroll {
+                overflow-y: auto; /* make the table scrollable if height is more than 200 px  */
+                height: 200px; /* gives an initial height of 200px to the table */
+              }
+              .ttable-scroll thead th {
+                position: sticky; /* make the table heads sticky */
+                top: 0px; /* table head will be placed from the top of the table and sticks to it */
+              }
+  
+              th,
+              td {
+                padding: 8px 16px;
+                border: 5px solid #ccc;
+              }
+              th {
+                background: #eee;
+              }
+
+           
+          </style>
+
+
+</head>
+<body>
+ 
+
+        <div id="content1"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 centered-content ">
+                      <h1>FAMILY DETAILS</h1>  
+                  </div>
+                </div>
+ <div class="table-scroll">
+            <table id="data-table"  class="data-table" >
+              
+                    <tr>
+                        <th>Ration Id</th>
+                        <th>Name</th>
+                        <th>Aadhar</th>
+                        <th>Card Type</th>
+                        <!-- Add more table headers based on your data -->
+                    </tr>
+                </thead>
+                <tbody>
+                </table>
+                    <!-- Table body will be populated by JavaScript -->
+                </tbody>
+ </div>
+
+            </table>
+            <div class="row proceed-button">
+                <div class="col-12 text-right">
+                  
+                  
+                    <!-- Button-->
+                    <button type="button" class="btn btn-primary mr-5" onclick="proceed()">OK</button>
+                </div>
+
+                <div class="col-12 text-left">
+                  
+                  
+                    <!-- Button-->
+                    <button type="button" class="btn btn-primary mr-5" onclick="back()">Back</button>
+                </div>
+              </div>
+              </div>
+        </div>
+        <div id="content2"></div>
+      </div>
+    </div>
+
+</body>
+<script>
+  // Retrieve intValue from localStorage
+  var intValue = localStorage.getItem('intValue');
+  var logId =  localStorage.getItem('logId');
+
+  // Make an AJAX request to fetch data from another route
+  $.ajax({
+      type: 'GET', 
+      url: '/getRationdet/' + intValue, 
+      success: function(response) {
+          var tableBody = $('#data-table tbody');
+
+          response.forEach(function(item) {
+              var row = '<tr><td>' + item.ration_card_id + '</td><td>' + item.name +'</td><td>'+item.aadhaar+'</td><td>'+item.card_type+ '</td></tr>';
+              tableBody.append(row);
+          });
+      },
+      error: function(error) {
+          console.error('Error:', error);
+      }
+  });
+
+  console.log("logId:",logId);
+
+  function proceed(){
+      $.ajax({
+      type: 'GET', 
+      url: '/getRationdet/checkgrainsdetail/' + intValue, 
+      success: function(response) {
+          if (response && response.length > 0) {
+              //localStorage.setItem('intValue', intValue);
+             // window.location.href = '/grains_details';
+              } else {
+                  localStorage.setItem('intValue', intValue);
+                  window.location.href = '/grains_details';
+                  
+              }
+
+      },
+      error: function(error) {
+          console.error('Error:', error);
+      }
+  });
+  }
+
+
+  function back(){
+      window.location.href='/Ration_Card_Auth'
+  }
+</script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

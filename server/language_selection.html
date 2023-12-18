@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Language Selection</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        $(function() {
+            $("#content1").load("/header");
+            $("#content2").load("/footer");
+        });
+    </script>
+    <style>
+        .main {
+            display: flex;
+            height: 60vh;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column; /* Ensures elements stack vertically */
+            width:100%;
+          
+        }
+        .btn {
+            height: 70px;
+            width:250px;
+            box-shadow: 0 8px 8px black;
+            padding: 10px 20px; 
+            font-size: 16px;
+            
+        }
+        /* CSS for changing font style of a heading */
+        h1 {
+            font-family: "Arial", sans-serif;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 60px;
+            margin-top:50px;
+        }
+        .logo {
+            max-width: 10%;
+            max-height: 10%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 60px;
+         
+
+
+   
+          }
+
+          .rowbutton{
+            margin-bottom:50px;
+            margin-right: 50px;
+            height: 80px;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            
+            }
+    </style>
+
+</head>
+<body>
+    <div id="content1"></div>
+    <div class="main p-4">
+
+        <div class="row logo">
+            <div class="col-3 ">
+                <!-- Image (Logo) --> 
+                <img src="/assets/images/Annadata_logo.png" alt="Logo Description" style="position: absolute; top: 0; left: 50;max-height:80px;">
+            </div>
+        </div>
+ 
+
+        
+        <div class="row">
+        <div class="col-12 centered-content ">
+              <h1>Please Select Language</h1>  
+          </div>
+        </div>
+        <div class="row">
+            <div class="d-grid col-12 centered-content pt-4 pl-4 pr-4 ">
+                <button type="button" class="btn btn-primary mr-5 btn-lg" onclick="proceed()" pb-1>English</button>
+                <div class=""></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 centered-content pt-4 pl-4 pr-4">
+                <button type="button" class="btn btn-primary mr-5 btn-lg" >Hindi</button>
+         
+    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 centered-content pt-4 pl-4 pr-4">
+              
+                <button type="button" class="btn btn-primary mr-5 btn-lg" >Bengali</button>
+               
+            </div>
+        </div>
+
+        <div class="rowbutton">
+            <div class="col-6">
+                <div class="backbutton">
+                    <button class="right-aligned-btn" style="background-color: light yellow; color: black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5); margin-left: 90px; margin-bottom: 100px;" onclick="back()">Back</button>
+
+                </div>
+            </div>
+            </div>
+
+        
+    </div>
+    <div id="content2"></div>
+ 
+
+</body>
+<script>
+    
+    function proceed() {
+    window.location.href = '/Ration_Card_Auth';
+}
+function back(){
+    window.location.href='/';
+}
+
+</script>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Combined Page</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function () {
+      $("#content1").load("/header");
+      $("#content2").load("/footer");
+    });
+
+
+
+  </script>
+  <style>
+
+
+       .data-table {
+        width: 80%;
+        /* Increase the width as needed */
+        align-items: center;
+        justify-content: center;
+
+        overflow: auto;
+        margin: 0 auto;
+        cursor: pointer;/* Apply cursor pointer to the entire table */
+        /* Center the table horizontally */
+
+    }
+
+    .data-table th {
+        background-color:  #06038D;
+        /* Dark background for header */
+        color: #ffffff;
+        cursor: pointer; /* Apply cursor pointer to the entire table */
+        /* White text color for header */
+    }
+
+
+
+
+
+    .table-scroll {
+        overflow-y: auto;
+        height: fit-content;
+        width: 80%;
+        cursor: pointer; /* Apply cursor pointer to the entire table */
+    }
+
+    .ttable-scroll thead th {
+        position: sticky;
+        /* make the table heads sticky */
+        top: 0px;
+        /* table head will be placed from the top of the table and sticks to it */
+        cursor: pointer; /* Apply cursor pointer to the entire table */
+    }
+
+
+    th {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer; 
+    }
+
+    tr {
+        text-align: center;
+       
+    }
+
+
+
+    /* Styling for rectangular buttons with margins on all sides */
+    td {
+        width: 120px;
+        /* Adjust width */
+        height: 40px;
+        /* Adjust height */
+        padding: 10px;
+        text-align: center;
+        margin: 10px;
+        /* Adjust margins */
+        cursor: pointer; /* Apply cursor pointer to the entire table */
+        
+    }
+    /* Styling for rectangular buttons */
+    td {
+        
+      /* Light blue color */
+      color: black;
+      /* Text color */
+      border: none;
+
+      cursor: pointer;
+      font-weight: bold;
+      /* Bold text */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      /* Slight shadow */
+      transition: transform 0.2s, box-shadow 0.2s;
+      /* Transition effects */
+  }
+
+/* Hover effect */
+td:hover {
+  background-color: #758595;
+  /* Darker blue on hover */
+  transform: translateY(-2px);
+  /* Move slightly up on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  /* Increase shadow on hover */
+}
+.right-aligned-btn {
+  height: 80px;
+  
+  
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer; 
+  transition: background 0.3s ease;
+  margin-left: 100px;
+  margin-bottom:10px;
+ 
+}
+.left-aligned-btn {
+  margin-top: 10px;
+  margin-left: 350px;
+
+  height: 80px;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.logo {
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 40px;
+
+}
+ </style>
+
+</head>
+
+<body>
+  <div class="row logo">
+    <div class="col-3 ">
+        <!-- Image (Logo) --> 
+        <img src="/assets/images/Annadata_logo.png" alt="Logo Description" style="position: absolute; left: 40;">
+    </div>
+</div>
+
+<div id="content1"></div>
+<div class="main p-4">
+    <div class="row">
+        <div class="col-12 centered-content">
+         
+                <h2 id="grains_det">Grains Details</h2>
+        </div>
+    </div>
+    <div class="table t-tb"  style="height:300px">
+        <table id="data-table" class="data-table">
+          <thead>
+              <tr>
+                <th >Ration Id</th>
+                <th >Grains</th>
+                <th >Quantity Left In Account</th>
+                <th >Price Per Kg</th>
+                  <!-- Add more table headers based on your data -->
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Table body will be populated by JavaScript -->
+          </tbody>
+      </table>
+  </div>
+ 
+ 
+  <div class="row ">
+    <div class="col-6 ">
+        <div class="backbutton">
+          <button class="right-aligned-btn" style="background-color: yellow; color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);"onclick="back()">Back</button>
+        </div>
+    </div>
+
+    <div class="col-6">
+        
+          <button class="left-aligned-btn" style="background-color: light rgb(155, 155, 244); color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);"onclick="proceed()">OK</button>
+        </div>
+    </div>
+</div>
+    
+     
+</div>
+
+      <div id="content2"></div>
+    
+
+
+  <script>
+    // Retrieve intValue from localStorage
+    var intValue = localStorage.getItem('intValue');
+    var logId = localStorage.getItem('logId');
+    var flag=localStorage.getItem('flag')
+ 
+
+    var allquantities = [];
+    var grainsdet = [];
+    var com_id = [];
+
+    if(flag==1){
+
+      $.ajax({
+          type:'GET',
+          url: '/countfamily/'+ intValue,
+          success:function(cfam){
+            var family_size=parseInt(cfam[0].famcount);
+
+         
+          $.ajax({
+            type: 'GET',
+            url: '/checktransactionquantity/' + intValue,
+            success: function (response) {
+              var tableBody = $('#data-table tbody');
+              var count = 0;
+              var quantity = 0;
+              var c=0;
+           
+        
+              response.forEach(function (item) {
+                var qtytaken=parseInt(item.total_quantity)
+             
+        
+                switch (item.card_type.toLowerCase()) {
+                  case 'pph':
+                    {
+                      switch (item.commodity_id ) {
+                        case 'RI01':
+                         
+                          quantity = 15-qtytaken;
+
+                          allquantities[0] = quantity;
+                          grainsdet[0] = item.name;
+                          com_id[0] = 'RI01';
+                          break;
+                        case 'WT02':
+                      
+                          quantity = 15-qtytaken;
+                          allquantities[1] = quantity;
+                          grainsdet[1] = item.name;
+                          com_id[1] = 'WT02';
+                          break;
+                        case 'DL03':
+                        quantity = 1-qtytaken;
+                          allquantities[2] = quantity;
+                          grainsdet[2] = item.name;
+                          com_id[2] = 'DL03';
+                          break;
+                        case 'SG04':
+                        quantity = 1-qtytaken;
+                          allquantities[3] = quantity;
+                          grainsdet[3] = item.name;
+                          com_id[3] = 'SG04';
+                          break;
+                        default:
+                          quantity = 0;
+                          break;
+                      }
+                      break;
+                    }
+                  case 'aay':
+                    {
+                      switch (item.commodity_id) {
+                        case 'RI01':
+                        quantity_taken=parseInt(item.total_quantity);
+                          quantity = 20-quantity_taken;
+                          allquantities[0] = quantity;
+                          grainsdet[0] = item.name;
+                          com_id[0] = 'RI01';
+                          break;
+                        case 'WT02':
+                        quantity_taken=parseInt(item.total_quantity);
+                          quantity = 15-quantity_taken;
+                          allquantities[1] = quantity;
+                          grainsdet[1] = item.name;
+                          com_id[1] = 'WT02';
+                          break;
+                        case 'DL03':
+                        quantity_taken=parseInt(item.total_quantity);
+                          quantity = 1-quantity_taken;
+                          allquantities[2] = quantity;
+                          grainsdet[2] = item.name;
+                          com_id[2] = 'DL03';
+                          break;
+                        case 'SG04':
+                        quantity_taken=parseInt(item.total_quantity);
+                          quantity = 1-quantity_taken;
+                          allquantities[3] = quantity;
+                          grainsdet[3] = item.name;
+                          com_id[3] = 'SG04';
+                          break;
+                        default:
+                          quantity = 0;
+                          break;
+                      }
+                      break;
+                    }
+                }
+
+
+                
+                var row = '<tr><td>' + item.ration_card_id + '</td><td>' + item.name + '</td><td>' + quantity + '</td><td>' + item.price + '</td></tr>';
+                tableBody.append(row);
+                //////console.log(allquantities);
+                ////console.log(grainsdet);
+
+              });
+            },
+            error: function (error) {
+              console.error('Error:', error);
+            }
+          });
+
+        }
+      });
+        }else{
+// Make an AJAX request to fetch data from another route
+    $.ajax({
+      type: 'GET',
+      url: '/getRationdet/getgrainsdetails/' + intValue,
+      success: function (response) {
+        var tableBody = $('#data-table tbody');
+        var count = 0;
+        var quantity = 0;
+
+
+
+        response.forEach(function (item) {
+          var family_size = parseInt(item.family_size);
+
+
+
+          switch (item.card_type.toLowerCase()) {
+            case 'pph':
+              {
+                switch (item.commodity_id) {
+                  case 'RI01':
+                    quantity = 15;
+                    allquantities[0] = quantity;
+                    grainsdet[0] = item.name;
+                    com_id[0] = 'RI01';
+                    break;
+                  case 'WT02':
+                    quantity = 15;
+                    allquantities[1] = quantity;
+                    grainsdet[1] = item.name;
+                    com_id[1] = 'WT02';
+                    break;
+                  case 'DL03':
+                    quantity = 1;
+                    allquantities[2] = quantity;
+                    grainsdet[2] = item.name;
+                    com_id[2] = 'DL03';
+                    break;
+                  case 'SG04':
+                    quantity = 1;
+                    allquantities[3] = quantity;
+                    grainsdet[3] = item.name;
+                    com_id[3] = 'SG04';
+                    break;
+                  default:
+                    quantity = 0;
+                    break;
+                }
+                break;
+              }
+            case 'aay':
+              {
+                switch (item.commodity_id) {
+                  case 'RI01':
+                    quantity = 20;
+                    allquantities[0] = quantity;
+                    grainsdet[0] = item.name;
+                    com_id[0] = 'RI01';
+                    break;
+                  case 'WT02':
+                    quantity = 15;
+                    allquantities[1] = quantity;
+                    grainsdet[1] = item.name;
+                    com_id[1] = 'WT02';
+                    break;
+                  case 'DL03':
+                    quantity = 1;
+                    allquantities[2] = quantity;
+                    grainsdet[2] = item.name;
+                    com_id[2] = 'DL03';
+                    break;
+                  case 'SG04':
+                    quantity = 1;
+                    allquantities[3] = quantity;
+                    grainsdet[3] = item.name;
+                    com_id[3] = 'SG04';
+                    break;
+                  default:
+                    quantity = 0;
+                    break;
+                }
+                break;
+              }
+          }
+
+
+
+          var row = '<tr><td>' + item.ration_card_id + '</td><td>' + item.name + '</td><td>' + quantity + '</td><td>' + item.price + '</td></tr>';
+          tableBody.append(row);
+          //////console.log(allquantities);
+          ////console.log(grainsdet);
+
+        });
+      },
+      error: function (error) {
+        console.error('Error:', error);
+      }
+    });
+
+
+
+        }
+
+    
+
+
+    function proceed() {
+      localStorage.setItem('ration_card_id', JSON.stringify(intValue));
+      localStorage.setItem('logId', JSON.stringify(logId));
+      localStorage.setItem('quantities', JSON.stringify(allquantities));
+      localStorage.setItem('grainsdet', JSON.stringify(grainsdet));
+      localStorage.setItem('commodity_id', JSON.stringify(com_id));
+      window.location.href = '/addquantity';
+    }
+
+
+    function back() {
+      window.location.href = '/family_details'
+    }
+  </script>
+
+
+</body>
+
+</html>

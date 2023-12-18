@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Combined Page</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    var ln= localStorage.getItem('ln');
+
+</script>
+<script src="language.js"></script>
+  <script>
+      $(function() {
+          $("#content1").load("/header");
+          $("#content2").load("/footer");
+      });
+
+      var quantities = JSON.parse(localStorage.getItem('quantities'));
+      var grainsdet = JSON.parse(localStorage.getItem('grainsdet'));
+      var ration_card_id=JSON.parse(localStorage.getItem('ration_card_id'));
+      var logId=JSON.parse(localStorage.getItem('logId'));
+     var com_id=JSON.parse(localStorage.getItem('commodity_id'));
+  </script>
+  <style>
+    .h2 {
+      font-family: "Arial", sans-serif;
+      font-style: italic;
+      font-size: 20px;
+      margin-bottom: 200px;
+  }
+
+
+        .data-table {
+          width: 100%;
+          /* Increase the width as needed */
+          align-items: center;
+          justify-content: center;
+  
+          overflow: auto;
+          margin: 0 auto;
+          cursor: pointer;/* Apply cursor pointer to the entire table */
+          /* Center the table horizontally */
+  
+      }
+  
+      .data-table th {
+          background-color:  #06038D;
+          /* Dark background for header */
+          color: #ffffff;
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+          /* White text color for header */
+      }
+  
+  
+  
+  
+  
+      .table-scroll {
+          overflow-y: auto;
+          height: fit-content;
+          width: 80%;
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+      }
+  
+      .ttable-scroll thead th {
+          position: sticky;
+          /* make the table heads sticky */
+          top: 0px;
+          /* table head will be placed from the top of the table and sticks to it */
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+      }
+  
+  
+      th {
+          font-size: 20px;
+          font-weight: bold;
+          text-align: center;
+          cursor: pointer; 
+      }
+  
+      tr {
+          text-align: center;
+         
+      }
+  
+  
+  
+      /* Styling for rectangular buttons with margins on all sides */
+      td {
+          width: 120px;
+          /* Adjust width */
+          height: 40px;
+          /* Adjust height */
+          padding: 10px;
+          text-align: center;
+          margin: 10px;
+          /* Adjust margins */
+          cursor: pointer; /* Apply cursor pointer to the entire table */
+          
+      }
+      /* Styling for rectangular buttons */
+      td {
+          
+        /* Light blue color */
+        color: black;
+        /* Text color */
+        border: none;
+  
+        cursor: pointer;
+        font-weight: bold;
+        /* Bold text */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Slight shadow */
+        transition: transform 0.2s, box-shadow 0.2s;
+        /* Transition effects */
+    }
+  
+  /* Hover effect */
+  td:hover {
+    background-color: #758595;
+    /* Darker blue on hover */
+    transform: translateY(-2px);
+    /* Move slightly up on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Increase shadow on hover */
+  }
+   .right-aligned-btn {
+    height: 80px;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+    transition: background 0.3s ease;
+    margin-left: 100px;
+    margin-bottom:10px;
+         
+      }
+      .left-aligned-btn {
+        margin-top: 10px;
+        margin-left: 350px;
+        height: 80px;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .logo {
+        width: 50px;
+        height: auto;
+        position: absolute;
+        top: 0;
+        left: 40px;
+      
+      }
+        
+      </style>
+   
+
+</head>
+<body>
+  <div class="row logo">
+    <div class="col-3 ">
+        <!-- Image (Logo) --> 
+        <img src="/assets/images/Annadata_logo.png" alt="Logo Description" style="position: absolute; left: 40;">
+    </div>
+</div>
+    
+   
+    <div id="content1"></div>
+    <div class="main mt-2">
+      <div class="row">
+        <div class="col-12 centered-content">
+            <div class="h2" id="add_quantity ">Add Quantity</div>
+        </div>
+    </div>
+
+    <div class="table-scroll">
+      <table id="data-table" class="data-table">
+          <thead>
+              <tr>
+                <th scope="col" id="grains">Grains</th>
+                <th scope="col" id="qty_stock">Quantity In stock</th>
+                <th scope="col" id="issue_qty">Issue Quantity</th>
+              </tr>
+          </thead>
+          <tbody id="tableBody">
+              <!-- Table body will be populated by JavaScript -->
+              <script>
+          
+                const tbody = document.getElementById('tableBody');
+              
+                // Loop through the arrays and create rows with three columns
+                for (let i = 0; i < quantities.length; i++) {
+                  const tr = document.createElement('tr');
+              
+                  // Column 1: Data from array1
+                  const td1 = document.createElement('td');
+                  td1.textContent = grainsdet[i];
+                  
+                  tr.appendChild(td1);
+
+                  const td2 = document.createElement('td');
+
+// Create increase and decrease buttons
+const increaseBtn = document.createElement('button');
+increaseBtn.textContent = '+';
+increaseBtn.style.backgroundColor = '#506378'; // Light blue background
+increaseBtn.style.color = 'white'; // White text color
+increaseBtn.style.border = '3px solid black'; // No border
+increaseBtn.style.borderRadius = '5px'; // Rounded corners
+increaseBtn.style.width = '35px'; // Set width
+increaseBtn.style.height = '35px'; // Set height
+increaseBtn.style.fontSize = '20px'; // Font size
+increaseBtn.style.cursor = 'pointer'; // Cursor style
+
+const decreaseBtn = document.createElement('button');
+decreaseBtn.textContent = '-';
+decreaseBtn.style.backgroundColor = '#506378'; // Light blue background
+decreaseBtn.style.color = 'white'; // White text color
+decreaseBtn.style.border = '3px solid black'; // No border
+decreaseBtn.style.borderRadius = '5px'; // Rounded corners
+decreaseBtn.style.width = '35px'; // Set width
+decreaseBtn.style.height = '35px'; // Set height
+decreaseBtn.style.fontSize = '20px'; // Font size
+decreaseBtn.style.cursor = 'pointer'; // Cursor style
+
+// Set margin to decrease space between buttons and text
+increaseBtn.style.marginRight = '5px'; // Margin between increase button and text
+decreaseBtn.style.marginLeft = '5px'; // Margin between decrease button and text
+
+// Append buttons to the table cell (td2)
+td2.appendChild(increaseBtn);
+td2.appendChild(decreaseBtn);
+
+
+
+                  // Quantity input field
+                  const quantityInput = document.createElement('input');
+                  quantityInput.type = 'number';
+                  quantityInput.value = quantities[i];
+          
+              
+                  // Event listeners for buttons to increment and decrement the input value
+                  increaseBtn.addEventListener('click', function() {
+                    if(parseInt(quantityInput.value)<quantities[i]){
+                        quantityInput.value = parseInt(quantityInput.value) + 1;
+                    }
+                  });
+              
+                  decreaseBtn.addEventListener('click', function() {
+                    if (parseInt(quantityInput.value) > 0) {
+                      quantityInput.value = parseInt(quantityInput.value) - 1;
+                    }
+                  });
+              
+                  // Append buttons and input field to the td element
+                  td2.appendChild(decreaseBtn);
+                  td2.appendChild(quantityInput);
+                  td2.appendChild(increaseBtn);
+              
+                  tr.appendChild(td2);
+              
+                  // Column 3: Data from array3
+                  const td3 = document.createElement('td');
+                  td3.textContent = quantities[i];
+                  tr.appendChild(td3);
+              
+                  tbody.appendChild(tr);
+                }
+    
+    
+                function getQuantities() {
+        const quantitiesinp = [];
+        const quantityInputs = document.querySelectorAll('#tableBody input[type="number"]');
+        quantityInputs.forEach(input => {
+          quantitiesinp.push(parseInt(input.value));
+        });
+        return quantitiesinp;
+        // Now 'quantities' array contains the values entered in the input fields
+      }
+    
+      function proceed(){
+        const qtyinp=getQuantities();
+        localStorage.setItem('ration_card_id',JSON.stringify(ration_card_id));
+        localStorage.setItem('logId',JSON.stringify(logId));
+        localStorage.setItem('commodity_id',JSON.stringify(com_id));
+        localStorage.setItem('quantities',JSON.stringify(qtyinp)); 
+        localStorage.setItem('grainsdet',JSON.stringify(grainsdet));
+        localStorage.setItem('ln',ln);
+        window.location.href = '/price_calculation';
+      }
+    
+      function back(){
+        window.location.href='/grains_details';
+      }
+    
+              </script>
+          </tbody>
+      </table>
+  </div>
+  <div class="row ">
+      <div class="col-6 ">
+          <div class="backbutton">
+            <button class="right-aligned-btn" style="background-color: yellow; color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);"onclick="back()">Back</button>
+          </div>
+      </div>
+
+      <div class="col-6">
+       
+            <button class="left-aligned-btn" style="background-color: light rgb(155, 155, 244); color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);"onclick="proceed()">OK</button>
+          </div>
+      </div>
+  </div>
+</div>
+      <div id="content2"></div>  
+
+
+  
+  </body>
+  </html>
+
+
+ 
+  

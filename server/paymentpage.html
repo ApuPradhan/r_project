@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            $("#content1").load("/header");
+            $("#content2").load("/footer");
+        });
+    </script>
+     <style>
+      
+        /* Custom styles, if needed */
+        .main {
+            height: 50vh; 
+        
+            /* Set the width to 100% of the viewport */
+      /* Ensure the container doesn't exceed the viewport width */
+     
+      
+    }
+
+
+
+        .centered-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:auto; /* Full viewport height */
+        }
+
+
+        .left-aligned-btn {
+            height: 80px;
+            background: linear-gradient(to right, #3498db, white);
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer !important;
+            transition: background 0.3s ease;
+            margin-bottom:600px;
+            margin-left: 900px;
+          }
+                               /* yha se camera scanner ka css code hai */
+    video {
+        border: 5px solid #007bff;
+        width: 100%;
+        width: 200px;
+        height: 200px;
+        margin-right: 50px;
+       
+    }
+    #scanButton{
+        background-color: #007bff;
+        width: 80px;
+        height: 40px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 100px;
+    }
+
+
+
+       
+    </style>
+
+</head>
+<body>
+
+    <div class="row logo">
+        <div class="col-3 ">
+            <!-- Image (Logo) --> 
+            <img src="/assets/images/Annadata_logo.png" alt="Logo Description" style="position: absolute; left: 40;">
+        </div>
+    </div>
+
+        
+       
+    <div id="content1"></div>
+    <div class="main p-4">
+    <div class="row">
+      <div class="col-12 centered-content">
+        <h3 class="custom-heading">Payment</h3>
+      </div>
+    </div>
+    <!-- yhan se camera scanner ka code hai -->
+    <div>
+        <h1>Scanner</h1>
+        <video id="cameraFeed" autoplay playsinline></video>
+        <button id="scanButton" onclick="toggleScan()">Scan</button>
+      
+    </div>
+           </div>
+           <div class="rowbutton">
+            <div class="col-11">
+          
+                <div class="forwardbutton">
+                  <button class="right-aligned-btn" style="background-color: light rgb(155, 155, 244); color: black ; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5);" onclick="proceed()">submit</button>
+          
+                </div>
+            </div>
+   
+      
+          
+            
+
+    </div>
+    <div id="content2"></div>
+
+
+
+</body>
+
+</html>
+<script>
+     var ration_card_id=JSON.parse(localStorage.getItem('ration_card_id'));
+      var logId=JSON.parse(localStorage.getItem('logId'));
+      var com_id=JSON.parse(localStorage.getItem('commodity_id'));
+      var quantities = JSON.parse(localStorage.getItem('quantities'));
+      var grainsdet = JSON.parse(localStorage.getItem('grainsdet'));
+      var total_price=JSON.parse(localStorage.getItem('total_price'));
+      console.log(logId);
+
+
+      //last four digit of ration card id
+      const rationtostr= ration_card_id.toString();
+      const ration4dig= rationtostr.slice(-4);
+      
+      //Transaction Date
+      
+      const date=new Date().toISOString().split('T')[0];
+      const td=date.split('-');
+      const transactiondate=td.join('');
+
+      console.log(td.join(''));
+
+      //random alphanimeric 4 dig
+      function generateCode() {
+  let alphanumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = '';
+  for (let i = 0; i < 4; i++) {
+    code += alphanumeric.charAt(Math.floor(Math.random() * alphanumeric.length));
+  }
+  return code;
+}
+
+let randomCode = generateCode();
+
+
+      //g digit logIg
+      //const logidtostring= logId.toString();
+      const log4dig=generateCode();
+
+      //transaction id
+      const transactionid=ration4dig+transactiondate+log4dig;
+
+    function proceed(){
+
+for (var i = 0; i < com_id.length; i++) {
+
+    (function(index) {
+    var dataToSend = {
+        transactionid: transactionid,
+        ration_card_id: ration_card_id,
+        logId: logId,
+        transactiondate:transactiondate,
+        com_id: com_id[i],
+        quantity: quantities[i],
+        total_price: total_price[i]
+    };
+
+   
+$.ajax({
+        type: 'POST',
+        url: '/transactiondata', 
+        data: dataToSend,
+        success: function(response) {
+        
+            window.location.href = '/transaction_success';
+        },
+        error: function(error) {
+            console.error('Error adding data for com_id:', com_id[i], 'Error:', error);
+        }
+    });
+})(i);
+}
+
+   
+    }
+</script>

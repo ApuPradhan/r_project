@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ration Card Login</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="public/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="public/style.css">
+    <script>
+        $(function () {
+            $("#content1").load("/header");
+            $("#content2").load("/footer");
+        });
+    </script>
+    <style>
+        .fixed-textarea {
+  width: 200px; /* Fixed width for the textarea */
+  height: 40px; /* Fixed height for the textarea */
+  padding: 2px; /* Padding for the textarea content */
+  font-size: 20px; /* Font size */
+  border: 1px solid #ccc; /* Border style */
+  border-radius: 5px;
+  resize: none; /* Disabling resizing */
+  margin: 3px; /* Margin for spacing */
+}
+
+.keyboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
+            margin-left: 150px;
+        }
+        .logo {
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 0;
+            left: 60px;
+            }
+           /* CSS for changing font style of a heading */
+        h1 {
+                font-family: "Arial", sans-serif;
+                font-style: italic;
+                font-weight: bold;
+                font-size: 60px;
+                margin-right: 140px;
+               }
+               h2 {
+                font-family: "Arial", sans-serif;
+                font-style: italic;
+                font-weight: bold;
+                font-size: 60px;
+                margin-right: 280px;
+
+               }
+
+        .btn {
+            height: 70px;
+            width:250px;
+            box-shadow: 0 8px 8px black;
+            padding: 10px 20px; 
+            font-size: 16px;
+        }
+        .delete {
+            height: 70px;
+            width:250px;
+            box-shadow: 0 8px 8px black;
+            padding: 10px 20px; 
+            font-size: 16px;
+        }
+        .clear {
+            height: 70px;
+            width:250px;
+            box-shadow: 0 8px 8px black;
+            padding: 10px 20px; 
+            font-size: 16px;
+        }
+
+        .left-aligned-btn {
+            height: 80px;
+        
+            background: linear-gradient(to right, #3498db, white);
+            color: #ffffff;
+            padding: 20px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-right: 200px;
+        } 
+                /* yha se camera scanner ka css code hai */
+    video {
+        border: 5px solid #007bff;
+        width: 100%;
+        width: 200px;
+        height: 200px;
+        margin-right: 50px;
+        margin-top: 10px;
+    }
+#scanButton{
+    background-color: #007bff;
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 100px;
+}
+.rowbutton{
+    margin-bottom:50px;
+    margin-right: 980px;
+    height: 80px;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    }
+
+
+    </style>
+
+</head>
+
+<body>
+    <div class="row logo">
+        <div class="col-3 ">
+            <!-- Image (Logo) --> 
+            <img src="/assets/images/Annadata_logo.png" alt="Logo Description" style="position: absolute; ; left: 60;">
+        </div>
+    </div>
+
+    <div id="content1"></div>
+     <div class="row ">
+            <div class="col-6 text-center">
+<!-- yhan se camera scanner ka code hai -->
+    <div>
+        <h1>Scanner</h1>
+        <video id="cameraFeed" autoplay playsinline></video>
+        <button id="scanButton" onclick="toggleScan()">Scan</button>
+    </div>
+           </div>
+  
+
+    
+           <div class="col-6">          <!-- yha se teleppad ki body part stsrt hai -->
+    <div class="keyboard">
+        <h2>Enter Ration No</h2>
+    <div class="screen" id="displayScreen"></div>
+           
+               
+                <div class="row">
+                    <div class="textarea"> 
+                        <textarea class="fixed-textarea" style= "width: 250px; height: 30px;">
+                        </textarea>
+                    </div>
+                </div>
+        
+                    <div class="row text-center" >
+                        <button class="btn small-button" style="margin-top: 8px; margin-bottom:8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">1</button>
+                        <button class="btn small-button"style="margin-top: 8px; margin-bottom: 8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">2</button>
+                        <button class="btn small-button" style="margin-top: 8px; margin-bottom:8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">3</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn small-button"style="margin-top: 8px; margin-bottom: 8px; margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">4</button>
+                        <button class="btn small-button"style="margin-top: 8px; margin-bottom: 8px; margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">5</button>
+                        <button class="btn small-button"style="margin-top: 8px; margin-bottom: 8px; margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">6</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn small-button" style="margin-top: 8px; margin-bottom: 8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">7</button>
+                        <button class="btn small-button" style="margin-top: 8px; margin-bottom: 8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">8</button>
+                        <button class="btn small-button" style="margin-top: 8px; margin-bottom: 8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">9</button>
+                    </div>
+                    <div class="row">
+                 
+                        <button class="btn small-button" style="margin-top: 8px; margin-bottom: 8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">0</button>
+                        <button class="delete small-button" style="margin-top: 8px; margin-bottom: 8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">X</button>
+                        <button class="clear small-button" style="margin-top: 8px; margin-bottom: 8px;margin-right: 14px; padding: 10px; width: 75px; height: 58px; font-size: 25px;">Clr</button>
+                    </div>
+                
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="backbutton">
+                    <button class="right-aligned-btn btn-lg float-left " onclick="back()">Back</button>
+               
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="forwardbutton">
+                    <button class="left-aligned-btn" style="background-color: light rgb(155, 155, 244); color: Black; width: 200px; padding: 20px; box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.5); margin-right: 100px; margin-bottom: 100px;" onclick="proceed()">Ok</button>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+ 
+
+    <div id="content2"></div>
+
+
+</body>
+<script>
+  
+
+    let scanning = false;
+    let videoStream;
+
+    function toggleScan() {
+        const video = document.getElementById('cameraFeed');
+        const scanButton = document.getElementById('scanButton');
+
+        if (!scanning) {
+            // Start scanning
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    videoStream = stream;
+                })
+                .catch((error) => {
+                    console.error('Error accessing camera:', error);
+                });
+            scanButton.textContent = 'Stop';
+        } else {
+            // Stop scanning
+            if (videoStream) {
+                const tracks = videoStream.getTracks();
+                tracks.forEach(track => track.stop());
+                video.srcObject = null;
+            }
+            scanButton.textContent = 'Start';
+        }
+
+        scanning = !scanning;
+    }
+
+
+    function proceed() {
+
+        var textValue = $("textarea").val();
+        var intValue = parseInt(textValue, 10);
+
+
+
+        // AJAX request to hit the route on button click and send the textarea value
+        $.ajax({
+            type: 'GET',
+            url: `/getRationdet/${intValue}`,
+            data: { value: intValue },
+            success: function (response) {
+                // On successful response, proceed to send data to the '/authenticationdata' route
+                $.ajax({
+                    type: 'POST',
+                    url: `/authenticationdata/${intValue}`,
+                    data: { value: intValue },
+                    success: function (response) {
+                        if (response && response.success && response.logId) {
+                            var log = response.logId;
+                            localStorage.setItem('intValue', JSON.stringify(intValue));
+                            localStorage.setItem('logId', JSON.stringify(log));
+                            window.location.href = '/family_details';
+                        } else {
+                            window.location.href = '/errorpage';
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        window.location.href = '/errorpage';
+                    }
+                });
+            },
+            error: function (error) {
+                console.error('Error:', error);
+                window.location.href = '/errorpage';
+            }
+        });
+    }
+
+
+    function back() {
+        window.location.href = '/language_selection';
+    }
+
+
+
+
+
+    const buttons = document.querySelectorAll('.btn');
+    const textarea = document.querySelector('textarea');
+
+    const delete_btn = document.querySelector('.delete');
+    const clear_btn = document.querySelector('.clear');
+
+    let chars = []
+
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            textarea.value += btn.innerText
+            chars = textarea.value.split('');
+            console.log(chars)
+        })
+
+    })
+
+    delete_btn.addEventListener('click', () => {
+        chars.pop();
+        textarea.value = chars.join('');
+    })
+
+    clear_btn.addEventListener('click', () => {
+        textarea.value = '';
+    })
+</script>
+
+
+</html>

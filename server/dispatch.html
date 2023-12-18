@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Combined Page</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      $(function() {
+          $("#content1").load("/header");
+          $("#content2").load("/footer");
+      });
+  </script>
+  <style>
+        /* Custom styles, if needed */
+        .main {
+            height: 50vh; 
+            /* Set the width to 100% of the viewport */
+      /* Ensure the container doesn't exceed the viewport width */
+     
+      
+    }
+    /* Center the table horizontally and add some top margin */
+    .center-table {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 5vh;
+      margin-top: 1px; /* Adjust as needed */
+    }
+    .centered-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto; /* Full viewport height */
+      flex-wrap: wrap;
+
+  }
+  .long-btn {
+    width: 300px; /* Set your desired width */
+    height: 80px;
+  }
+  .card {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    max-height:60px;
+
+  }
+  .card-body{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    max-height:50px;
+  }
+
+  h1{
+    justify-content: center;
+  }
+  
+</style>
+   
+
+</head>
+<body>
+
+
+    <div id="content1"></div> 
+    <div class="main p-4">
+      <div class="row">
+        <div class="col-12 centered-content ">
+            <div  class="">
+                <h3 id="family_det">Dispatch Selection <br> Please Select the Commodity</h3></div>
+        </div>
+    </div>
+      
+
+                   <div class="row proceed-button centered-content ">
+                     <div class="col-6 text-left mb-3">     
+                         <!-- Button -->
+                         <div class="d-flex justify-content-between">
+                           <button type="button" id="btnRice" class="btn btn-primary long-btn">Rice</button>
+                           <div class="col-6 text-right">     
+                            <!-- Button -->
+                            <div class="d-flex justify-content-between">
+                           <button type="button" id="btnDal" class="btn btn-primary long-btn">Dal</button>
+                           </div>
+                           </div>   
+                  </div>
+                  </div>
+                  </div>
+
+
+                         <div class="row proceed-button centered-content ">
+                     <div class="col-6 text-left">     
+                         <!-- Button -->
+                         <div class="d-flex justify-content-between">
+                           <button type="button" id="btnWheat" class="btn btn-primary long-btn">Wheat</button>
+                           <div class="col-6 text-right">     
+                            <!-- Button -->
+                            <div class="d-flex justify-content-between">
+                           <button type="button" id="btnSugar" class="btn btn-primary long-btn">Sugar</button>
+                           </div>
+                           </div>   
+                  </div>
+                  </div>
+                  </div>
+
+        </div>
+  
+      <div id="content2"></div>
+
+
+  
+  </body>
+  </html>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const btnRice = document.getElementById("btnRice");
+        const btnDal = document.getElementById("btnDal");
+        const btnWheat = document.getElementById("btnWheat");
+        const btnSugar = document.getElementById("btnSugar");
+
+        btnRice.addEventListener("click", function() {
+            btnRice.style.backgroundColor = "green";
+        });
+
+        btnDal.addEventListener("click", function() {
+            btnDal.style.backgroundColor = "green";
+        });
+
+        btnWheat.addEventListener("click", function() {
+            btnWheat.style.backgroundColor = "green";
+        });
+
+        btnSugar.addEventListener("click", function() {
+            btnSugar.style.backgroundColor = "green";
+        });
+    });
+</script>
+  
